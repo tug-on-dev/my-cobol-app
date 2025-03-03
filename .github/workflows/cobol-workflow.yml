@@ -1,0 +1,34 @@
+name: COBOL Build and Run
+
+on:
+  push:
+    paths:
+      - '**/*.cbl'
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    name: Compile and Execute COBOL Program
+    runs-on: [self-hosted, cobol]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Compile COBOL Program
+        run: |
+          echo "Compiling COBOL program..."
+          # Assuming you have a COBOL compiler like GnuCOBOL installed on your runner
+          cobc -x -o hello_world hello_world.cbl
+        
+      - name: Execute COBOL Program
+        run: |
+          echo "Executing COBOL program..."
+          ./hello_world
+          
+      - name: Archive compiled binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: cobol-binary
+          path: hello_world
+          retention-days: 5

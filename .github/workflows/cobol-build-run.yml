@@ -1,0 +1,27 @@
+name: COBOL Build and Run
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    name: Compilation et Exécution du Programme COBOL
+    runs-on: [self-hosted, cobol]
+    
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+        
+      - name: Compilation du Programme COBOL
+        run: |
+          echo "Compilation du programme COBOL..."
+          cobc -x -o hello_world hello_world.cbl
+        
+      - name: Exécution du Programme COBOL
+        run: |
+          echo "Exécution du programme COBOL..."
+          ./hello_world

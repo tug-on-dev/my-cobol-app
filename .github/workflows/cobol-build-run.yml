@@ -25,3 +25,10 @@ jobs:
         run: |
           echo "Exécution du programme COBOL..."
           ./hello_world
+
+      - name: Écrire le résultat dans GitHub Summary
+        run: |
+          echo "## Résultat de l'exécution du programme COBOL" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          ./hello_world >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

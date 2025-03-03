@@ -2,8 +2,9 @@ name: COBOL Build and Run
 
 on:
   push:
-    paths:
-      - '**/*.cbl'
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:

@@ -1,0 +1,27 @@
+name: COBOL Build and Run
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    runs-on: cobol  # Utilise un runner local où COBOL est installé
+    
+    steps:
+    - uses: actions/checkout@v3
+      
+    - name: Create bin directory if not exists
+      run: mkdir -p bin
+      
+    - name: Compile COBOL program
+      run: cobc -x -o bin/hello_world hello_world.cbl
+      
+    - name: Run compiled program
+      run: ./bin/hello_world
+      
+    - name: List output files
+      run: ls -la bin/

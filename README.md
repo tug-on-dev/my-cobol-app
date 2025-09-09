@@ -7,11 +7,24 @@
 
 This project is a set of training materials and labs for COBOL on z/OS. The following books are available within this repository. To get started, follow the steps in their respective READMEs.
 
+## 📚 Comprehensive Documentation
+
+**NEW**: Complete reference and explanation documentation is now available in the [`docs/`](docs/) directory covering all 68 COBOL and JCL files in this repository. This documentation is designed for developers preparing for codebase migration and modernization efforts.
+
+**Quick Start**: Begin with the [📖 Documentation Overview](docs/README.md) or jump to the [🏗️ Architectural Overview](docs/architectural-overview.md).
+
+## Course Modules
+
 - Released
-    - [COBOL Programming Course #1 - Getting Started](COBOL%20Programming%20Course%20%231%20-%20Getting%20Started/README.md)
-    - [COBOL Programming Course #2 - Learning COBOL](COBOL%20Programming%20Course%20%232%20-%20Learning%20COBOL/README.md)
-    - [COBOL Programming Course #3 - Advanced Topics](COBOL%20Programming%20Course%20%233%20-%20Advanced%20Topics/README.md)
-    - [COBOL Programming Course #4 - Testing](COBOL%20Programming%20Course%20%234%20-%20Testing/README.md)
+    - [COBOL Programming Course #1 - Getting Started](COBOL%20Programming%20Course%20%231%20-%20Getting%20Started/README.md) | [📖 Docs](docs/COBOL%20Programming%20Course%20%231%20-%20Getting%20Started/)
+    - [COBOL Programming Course #2 - Learning COBOL](COBOL%20Programming%20Course%20%232%20-%20Learning%20COBOL/README.md) | [📖 Docs](docs/COBOL%20Programming%20Course%20%232%20-%20Learning%20COBOL/)
+    - [COBOL Programming Course #3 - Advanced Topics](COBOL%20Programming%20Course%20%233%20-%20Advanced%20Topics/README.md) | [📖 Docs](docs/COBOL%20Programming%20Course%20%233%20-%20Advanced%20Topics/)
+    - [COBOL Programming Course #4 - Testing](COBOL%20Programming%20Course%20%234%20-%20Testing/README.md) | [📖 Docs](docs/COBOL%20Programming%20Course%20%234%20-%20Testing/)
+
+## Additional Materials
+
+- [ORCL_COBOL](ORCL_COBOL/): Oracle integration examples | [📖 Docs](docs/ORCL_COBOL/)
+- [TSC](TSC/): Open Mainframe Project Technical Steering Committee details
 
 If you run into any issues, please don't hesitate to reach out on our [Slack channel](https://openmainframeproject.slack.com/archives/C011NE32Z1T).
 

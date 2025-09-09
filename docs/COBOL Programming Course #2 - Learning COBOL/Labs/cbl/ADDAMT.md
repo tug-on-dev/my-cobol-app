@@ -21,25 +21,28 @@ ADDAMT.cobol demonstrates interactive COBOL programming with user input, loop co
 
 ### Data Structures
 
-#### Input Structure (KEYED-INPUT)
-```
-01  KEYED-INPUT
-├── CUST-NO-IN    PIC X(15)  - Customer name/number
-├── AMT1-IN       PIC 9(5)   - First purchase amount
-├── AMT2-IN       PIC 9(5)   - Second purchase amount
-└── AMT3-IN       PIC 9(5)   - Third purchase amount
-```
+#### Program Data Structures
 
-#### Output Structure (DISPLAYED-OUTPUT)
-```
-01  DISPLAYED-OUTPUT
-├── CUST-NO-OUT   PIC X(15)  - Customer name for display
-└── TOTAL-OUT     PIC 9(6)   - Calculated total (6 digits)
-```
-
-#### Control Variables
-```
-01  MORE-DATA     PIC X(3) VALUE 'YES'  - Loop control flag
+```mermaid
+classDiagram
+    class KEYED-INPUT {
+        +PIC X(15) CUST-NO-IN : Customer name/number
+        +PIC 9(5) AMT1-IN : First purchase amount
+        +PIC 9(5) AMT2-IN : Second purchase amount
+        +PIC 9(5) AMT3-IN : Third purchase amount
+    }
+    
+    class DISPLAYED-OUTPUT {
+        +PIC X(15) CUST-NO-OUT : Customer name for display
+        +PIC 9(6) TOTAL-OUT : Calculated total
+    }
+    
+    class CONTROL-VARIABLES {
+        +PIC X(3) MORE-DATA : "YES" | "NO"
+    }
+    
+    KEYED-INPUT --> DISPLAYED-OUTPUT : processes
+    CONTROL-VARIABLES --> KEYED-INPUT : controls
 ```
 
 ### External Dependencies
@@ -74,53 +77,29 @@ This program demonstrates essential interactive COBOL programming concepts:
 
 ### Business Logic Flow
 
-```
-Program Execution Flow:
-┌─────────────────┐
-│   START         │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Initialize      │
-│ MORE-DATA='YES' │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ PERFORM UNTIL   │◄─────────────┐
-│ MORE-DATA='NO'  │              │
-└─────────┬───────┘              │
-          │                      │
-┌─────────▼───────┐              │
-│ Prompt & Accept │              │
-│ Customer Name   │              │
-└─────────┬───────┘              │
-          │                      │
-┌─────────▼───────┐              │
-│ Prompt & Accept │              │
-│ 3 Purchase Amts │              │
-└─────────┬───────┘              │
-          │                      │
-┌─────────▼───────┐              │
-│ Calculate Total │              │
-│ (ADD...GIVING)  │              │
-└─────────┬───────┘              │
-          │                      │
-┌─────────▼───────┐              │
-│ Display Results │              │
-│ (Name + Total)  │              │
-└─────────┬───────┘              │
-          │                      │
-┌─────────▼───────┐              │
-│ Prompt for More │              │
-│ Data (YES/NO)   │              │
-└─────────┬───────┘              │
-          │                      │
-┌─────────▼───────┐              │
-│ INSPECT Convert │              │
-│ 'noyes'→'NOYES' │              │
-└─────────┬───────┘              │
-          │                      │
-          └──────────────────────┘
+```mermaid
+flowchart TD
+    A[START] --> B[Initialize<br/>MORE-DATA='YES']
+    B --> C{MORE-DATA='NO'?}
+    C -->|No| D[Prompt & Accept<br/>Customer Name]
+    D --> E[Prompt & Accept<br/>3 Purchase Amounts]
+    E --> F[Calculate Total<br/>ADD...GIVING]
+    F --> G[Display Results<br/>Name + Total]
+    G --> H[Prompt for More<br/>Data YES/NO]
+    H --> I[INSPECT Convert<br/>'noyes'→'NOYES']
+    I --> C
+    C -->|Yes| J[END]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#fff3e0
+    style D fill:#e8f5e8
+    style E fill:#fce4ec
+    style F fill:#f9fbe7
+    style G fill:#e1f5fe
+    style H fill:#fef7e0
+    style I fill:#f3e5f5
+    style J fill:#ffebee
 ```
 
 ### COBOL Language Features Demonstrated

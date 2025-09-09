@@ -160,32 +160,18 @@ Each COBOL program has a corresponding JCL file following the pattern: `[PROGRAM
 
 ## Job Execution Flow
 
-```
-Job Submission Flow:
-┌─────────────────┐
-│ Submit JCL      │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Compile COBOL   │
-│ Source Code     │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Link Edit       │
-│ Create Load     │
-│ Module          │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Execute         │
-│ Program         │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Generate        │
-│ Output          │
-└─────────────────┘
+```mermaid
+flowchart TD
+    A[Submit JCL] --> B[Compile COBOL<br/>Source Code]
+    B --> C[Link Edit<br/>Create Load Module]
+    C --> D[Execute Program]
+    D --> E[Generate Output]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
 ```
 
 ## Error Handling

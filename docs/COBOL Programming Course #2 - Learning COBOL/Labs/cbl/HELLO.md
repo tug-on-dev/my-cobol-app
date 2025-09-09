@@ -45,21 +45,14 @@ This program serves as the traditional "Hello World" introduction to COBOL progr
 
 ### Business Logic Flow
 
-```
-Program Execution Flow:
-┌─────────────────┐
-│   START         │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ DISPLAY         │
-│ 'HELLO WORLD!'  │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│    GOBACK       │
-│  (TERMINATE)    │
-└─────────────────┘
+```mermaid
+flowchart TD
+    A[START] --> B[DISPLAY<br/>'HELLO WORLD!']
+    B --> C[GOBACK<br/>TERMINATE]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#ffebee
 ```
 
 ### COBOL Language Features Demonstrated

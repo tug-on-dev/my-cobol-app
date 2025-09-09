@@ -28,22 +28,35 @@ CBDEM1 is a comprehensive Oracle database integration program that provides empl
 ### Data Structures
 
 #### Oracle Connection Structures
-```
-LDA (Login Data Area)
-├── LDA-V2RC     - Version 2 Return Code
-├── LDA-RC       - Return Code
-└── HDA (Host Data Area) - 512 bytes
 
-CURSOR-1 (Primary Operations)
-├── C-V2RC       - Version 2 Return Code
-├── C-TYPE       - Cursor Type
-├── C-ROWS       - Row Count
-├── C-OFFS       - Offset
-├── C-FNC        - Function Code
-└── C-RC         - Return Code
-
-CURSOR-2 (Department Validation)
-└── [Same structure as CURSOR-1]
+```mermaid
+classDiagram
+    class LDA {
+        +PIC S9(9) LDA-V2RC
+        +PIC S9(9) LDA-RC
+        +PIC X(512) HDA
+    }
+    
+    class CURSOR-1 {
+        +PIC S9(9) C-V2RC
+        +PIC S9(9) C-TYPE
+        +PIC S9(9) C-ROWS
+        +PIC S9(9) C-OFFS
+        +PIC S9(9) C-FNC
+        +PIC S9(9) C-RC
+    }
+    
+    class CURSOR-2 {
+        +PIC S9(9) C-V2RC
+        +PIC S9(9) C-TYPE
+        +PIC S9(9) C-ROWS
+        +PIC S9(9) C-OFFS
+        +PIC S9(9) C-FNC
+        +PIC S9(9) C-RC
+    }
+    
+    LDA ||--|| CURSOR-1 : uses
+    LDA ||--|| CURSOR-2 : uses
 ```
 
 #### Authentication Data
@@ -63,14 +76,28 @@ SQL-SELEMP       - Employee metadata: "SELECT ENAME,JOB FROM EMP"
 ```
 
 #### Employee Data Fields
-```
-Employee Record Structure:
-├── EMPNO        PIC S9(9) COMP    - Employee Number (auto-generated)
-├── ENAME        PIC X(12)         - Employee Name
-├── JOB          PIC X(12)         - Job Title
-├── SAL          PIC X(10)         - Salary
-├── DEPTNO       PIC X(10)         - Department Number
-└── DNAME        PIC X(15)         - Department Name (validation)
+
+```mermaid
+classDiagram
+    class Employee {
+        +PIC S9(9) COMP EMPNO
+        +PIC X(12) ENAME
+        +PIC X(12) JOB
+        +PIC X(10) SAL
+        +PIC X(10) DEPTNO
+        +PIC X(15) DNAME
+        +validateDepartment()
+        +generateEmployeeNumber()
+        +insertRecord()
+    }
+    
+    class Department {
+        +PIC X(10) DEPTNO
+        +PIC X(15) DNAME
+        +validate()
+    }
+    
+    Employee ||--|| Department : belongs_to
 ```
 
 ### External Dependencies
@@ -129,63 +156,35 @@ This program implements a robust employee management system with the following d
 
 ### Business Logic Flow
 
-```
-Program Flow Sequence:
-┌─────────────────┐
-│   START         │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Connect to      │
-│ Oracle DB       │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Open Cursors &  │
-│ Prepare SQL     │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Get Max EMPNO   │
-│ from Database   │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Interactive     │◄──────┐
-│ Employee Input  │       │
-└─────────┬───────┘       │
-          │               │
-┌─────────▼───────┐       │
-│ Validate        │       │
-│ Department      │       │
-└─────────┬───────┘       │
-          │               │
-┌─────────▼───────┐       │
-│ Generate Next   │       │
-│ Employee Number │       │
-└─────────┬───────┘       │
-          │               │
-┌─────────▼───────┐       │
-│ Insert Employee │       │
-│ Record          │       │
-└─────────┬───────┘       │
-          │               │
-┌─────────▼───────┐       │
-│ Handle          │       │
-│ Duplicates      │       │
-└─────────┬───────┘       │
-          │               │
-┌─────────▼───────┐       │
-│ Commit          │       │
-│ Transaction     │       │
-└─────────┬───────┘       │
-          │               │
-┌─────────▼───────┐       │
-│ Display Success │       │
-│ Message         │       │
-└─────────┬───────┘       │
-          │               │
-          └───────────────┘
+```mermaid
+flowchart TD
+    A[START] --> B[Connect to Oracle DB]
+    B --> C[Open Cursors & Prepare SQL]
+    C --> D[Get Max EMPNO from Database]
+    D --> E[Interactive Employee Input]
+    E --> F[Validate Department]
+    F --> G[Generate Next Employee Number]
+    G --> H[Insert Employee Record]
+    H --> I[Handle Duplicates]
+    I --> J[Commit Transaction]
+    J --> K[Display Success Message]
+    K --> L{Continue?}
+    L -->|Yes| E
+    L -->|No| M[EXIT-STOP]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#f9fbe7
+    style G fill:#e1f5fe
+    style H fill:#fef7e0
+    style I fill:#f3e5f5
+    style J fill:#e8f5e8
+    style K fill:#fff3e0
+    style L fill:#fce4ec
+    style M fill:#ffebee
 ```
 
 ### Data Flow Architecture

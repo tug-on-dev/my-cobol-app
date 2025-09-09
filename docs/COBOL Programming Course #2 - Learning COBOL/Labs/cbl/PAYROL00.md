@@ -21,14 +21,19 @@ PAYROL00.cobol demonstrates fundamental COBOL programming concepts including var
 ### Data Structures
 
 #### Working Storage Variables
-```
-WORKING-STORAGE SECTION:
-├── WHO          PIC X(15)  - Employee name
-├── WHERE        PIC X(20)  - Employee location  
-├── WHY          PIC X(30)  - Purpose/reason
-├── RATE         PIC 9(3)   - Hourly rate (3 digits)
-├── HOURS        PIC 9(3)   - Hours worked (3 digits)
-└── GROSS-PAY    PIC 9(5)   - Calculated gross pay (5 digits)
+
+```mermaid
+classDiagram
+    class WORKING-STORAGE {
+        +PIC X(15) WHO : Employee name
+        +PIC X(20) WHERE : Employee location
+        +PIC X(30) WHY : Purpose/reason
+        +PIC 9(3) RATE : Hourly rate
+        +PIC 9(3) HOURS : Hours worked
+        +PIC 9(5) GROSS-PAY : Calculated gross pay
+        +calculateGrossPay()
+        +displayEmployeeInfo()
+    }
 ```
 
 #### Data Type Details
@@ -68,39 +73,20 @@ This program demonstrates essential COBOL programming concepts:
 
 ### Business Logic Flow
 
-```
-Program Execution Flow:
-┌─────────────────┐
-│   START         │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Initialize      │
-│ Employee Data   │
-│ (MOVE statements)│
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Calculate       │
-│ Gross Pay       │
-│ (COMPUTE)       │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Display         │
-│ Employee Info   │
-│ (6 DISPLAY)     │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Display         │
-│ Summary Line    │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│    GOBACK       │
-│  (TERMINATE)    │
-└─────────────────┘
+```mermaid
+flowchart TD
+    A[START] --> B[Initialize Employee Data<br/>MOVE statements]
+    B --> C[Calculate Gross Pay<br/>COMPUTE]
+    C --> D[Display Employee Info<br/>6 DISPLAY statements]
+    D --> E[Display Summary Line]
+    E --> F[GOBACK<br/>TERMINATE]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#ffebee
 ```
 
 ### COBOL Language Features Demonstrated

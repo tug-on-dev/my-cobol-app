@@ -11,25 +11,30 @@ This document provides consolidated reference and explanation documentation for 
 ### Common Architecture Pattern
 
 All file processing programs follow this standard structure:
-```
-ENVIRONMENT DIVISION
-├── FILE-CONTROL
-    ├── SELECT ACCT-REC ASSIGN TO ACCTREC    (Input)
-    └── SELECT PRINT-LINE ASSIGN TO PRTLINE  (Output)
 
-DATA DIVISION
-├── FILE SECTION
-│   ├── FD ACCT-REC (Account records with customer data)
-│   └── FD PRINT-LINE (Formatted output records)
-└── WORKING-STORAGE SECTION
-    ├── FLAGS (End-of-file indicators)
-    └── TOTALS/COUNTERS (Accumulator variables)
-
-PROCEDURE DIVISION
-├── OPEN-FILES
-├── Processing Loop (READ-WRITE cycle)
-├── CLOSE-STOP
-└── Support Paragraphs
+```mermaid
+graph TD
+    A[ENVIRONMENT DIVISION] --> B[FILE-CONTROL]
+    B --> B1[SELECT ACCT-REC<br/>ASSIGN TO ACCTREC<br/>Input]
+    B --> B2[SELECT PRINT-LINE<br/>ASSIGN TO PRTLINE<br/>Output]
+    
+    C[DATA DIVISION] --> D[FILE SECTION]
+    C --> E[WORKING-STORAGE SECTION]
+    
+    D --> D1[FD ACCT-REC<br/>Account records]
+    D --> D2[FD PRINT-LINE<br/>Formatted output]
+    
+    E --> E1[FLAGS<br/>End-of-file indicators]
+    E --> E2[TOTALS/COUNTERS<br/>Accumulator variables]
+    
+    F[PROCEDURE DIVISION] --> F1[OPEN-FILES]
+    F --> F2[Processing Loop<br/>READ-WRITE cycle]
+    F --> F3[CLOSE-STOP]
+    F --> F4[Support Paragraphs]
+    
+    style A fill:#e3f2fd
+    style C fill:#f3e5f5
+    style F fill:#e8f5e8
 ```
 
 ### CBL0001.cobol - Basic File Copy
@@ -244,20 +249,25 @@ END-IF
 6. **CLOSE-STOP** - Resource cleanup
 
 ### Data Structure Pattern
-```cobol
-FILE SECTION:
-├── Input File (ACCT-REC)
-│   ├── Account Information
-│   ├── Customer Data
-│   └── Financial Data
-└── Output File (PRINT-LINE)
-    └── Formatted Output Record
 
-WORKING-STORAGE:
-├── Control Flags (LASTREC)
-├── Counters/Accumulators
-├── Header/Trailer Records
-└── Temporary Work Areas
+```mermaid
+graph TD
+    A[FILE SECTION] --> B[Input File ACCT-REC]
+    A --> C[Output File PRINT-LINE]
+    
+    B --> B1[Account Information]
+    B --> B2[Customer Data]
+    B --> B3[Financial Data]
+    
+    C --> C1[Formatted Output Record]
+    
+    D[WORKING-STORAGE] --> E[Control Flags<br/>LASTREC]
+    D --> F[Counters/Accumulators]
+    D --> G[Header/Trailer Records]
+    D --> H[Temporary Work Areas]
+    
+    style A fill:#e3f2fd
+    style D fill:#f3e5f5
 ```
 
 ### Error Handling Pattern

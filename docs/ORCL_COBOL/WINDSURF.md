@@ -20,37 +20,57 @@ WINDSURF.COB is a specialized COBOL program designed to track and display windsu
 ### Data Structures
 
 #### Main Data Structure: WINDSURF-SESSION
-```
-01  WINDSURF-SESSION
-    ├── SESSION-INFO
-    │   ├── RIDER-NAME          PIC X(30)    - "Damien Henry"
-    │   ├── SESSION-DATE        PIC X(10)    - "31/07/2023"
-    │   ├── SESSION-LOCATION    PIC X(30)    - "Pont-Mahe"
-    │   └── SESSION-TYPE        PIC X(10)    - "Slalom"
-    │
-    ├── EQUIPMENT-INFO
-    │   ├── BOARD-TYPE          PIC X(20)    - (Not initialized)
-    │   ├── SAIL-SIZE           PIC X(20)    - (Not initialized)
-    │   ├── FIN-TYPE            PIC X(20)    - (Not initialized)
-    │   └── GPS-MODEL           PIC X(10)    - "GW-60"
-    │
-    ├── PERFORMANCE-METRICS
-    │   ├── MAX-2S              PIC 99V99    - 31.93 knots
-    │   ├── VMAX                PIC 99V99    - 31.98 knots
-    │   ├── AVG-10S             PIC 99V99    - 30.44 knots
-    │   ├── DISTANCE-MARKS
-    │   │   ├── MARK-100M       PIC 99V99    - 30.54 knots
-    │   │   ├── MARK-250M       PIC 99V99    - 30.87 knots
-    │   │   └── MARK-500M       PIC 99V99    - 30.02 knots
-    │   └── TIME-SPLITS
-    │       ├── NAUTICAL-MILE   PIC 99V99    - 24.04 knots
-    │       ├── MARK-30MIN      PIC 99V99    - 15.34 knots
-    │       └── MARK-1HOUR      PIC 99V99    - 12.82 knots
-    │
-    └── SESSION-TOTALS
-        ├── ALPHA-500           PIC 999      - (Not initialized)
-        ├── TOTAL-DISTANCE      PIC 999V99   - 71.98 km
-        └── SESSION-DURATION    PIC X(4)     - "4h7"
+
+```mermaid
+classDiagram
+    class WINDSURF-SESSION {
+        <<record>>
+    }
+    
+    class SESSION-INFO {
+        +PIC X(30) RIDER-NAME : "Damien Henry"
+        +PIC X(10) SESSION-DATE : "31/07/2023"  
+        +PIC X(30) SESSION-LOCATION : "Pont-Mahe"
+        +PIC X(10) SESSION-TYPE : "Slalom"
+    }
+    
+    class EQUIPMENT-INFO {
+        +PIC X(20) BOARD-TYPE : (Not initialized)
+        +PIC X(20) SAIL-SIZE : (Not initialized)
+        +PIC X(20) FIN-TYPE : (Not initialized)
+        +PIC X(10) GPS-MODEL : "GW-60"
+    }
+    
+    class PERFORMANCE-METRICS {
+        +PIC 99V99 MAX-2S : 31.93 knots
+        +PIC 99V99 VMAX : 31.98 knots
+        +PIC 99V99 AVG-10S : 30.44 knots
+    }
+    
+    class DISTANCE-MARKS {
+        +PIC 99V99 MARK-100M : 30.54 knots
+        +PIC 99V99 MARK-250M : 30.87 knots
+        +PIC 99V99 MARK-500M : 30.02 knots
+    }
+    
+    class TIME-SPLITS {
+        +PIC 99V99 NAUTICAL-MILE : 24.04 knots
+        +PIC 99V99 MARK-30MIN : 15.34 knots
+        +PIC 99V99 MARK-1HOUR : 12.82 knots
+    }
+    
+    class SESSION-TOTALS {
+        +PIC 999 ALPHA-500 : (Not initialized)
+        +PIC 999V99 TOTAL-DISTANCE : 71.98 km
+        +PIC X(4) SESSION-DURATION : "4h7"
+    }
+    
+    WINDSURF-SESSION ||--|| SESSION-INFO
+    WINDSURF-SESSION ||--|| EQUIPMENT-INFO
+    WINDSURF-SESSION ||--|| PERFORMANCE-METRICS
+    WINDSURF-SESSION ||--|| SESSION-TOTALS
+    PERFORMANCE-METRICS ||--|| DISTANCE-MARKS
+    PERFORMANCE-METRICS ||--|| TIME-SPLITS
 ```
 
 ### External Dependencies
@@ -85,36 +105,20 @@ This program serves as a **data demonstration and reporting tool** with the foll
 
 ### Business Logic Flow
 
-```
-Program Execution Flow:
-┌─────────────────┐
-│   START         │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Display Session │
-│ Header Info     │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Display Rider   │
-│ Name & Date     │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Display         │
-│ Location        │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│ Display Speed   │
-│ Metrics         │
-└─────────┬───────┘
-          │
-┌─────────▼───────┐
-│   GOBACK        │
-│   (TERMINATE)   │
-└─────────────────┘
+```mermaid
+flowchart TD
+    A[START] --> B[Display Session Header Info]
+    B --> C[Display Rider Name & Date]
+    C --> D[Display Location]
+    D --> E[Display Speed Metrics]
+    E --> F[GOBACK - TERMINATE]
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#ffebee
 ```
 
 ### Data Flow Architecture

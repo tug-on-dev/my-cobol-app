@@ -56,5 +56,5 @@ This directory contains comprehensive documentation for migrating the existing C
 
 ---
 
-**Generated**: $(date)
+**Generated**: 2024-12-19
 **Repository**: ghas-toulouse-demo/my-cobol-app
